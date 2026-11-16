@@ -8,11 +8,11 @@
   <title>DeskOps Toolkit — Ferramentas para quem resolve</title>
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="assets/styles.css">
-  <link rel="stylesheet" href="assets/dashboard.css">
+  <link rel="stylesheet" href="assets/dashboard.css?v=1.3">
   <script src="assets/core.js" defer></script>
   <script src="assets/app.js" defer></script>
-  <script src="assets/analytics.js" defer></script>
-  <script src="assets/dashboard.js" defer></script>
+  <script src="assets/analytics.js?v=1.3" defer></script>
+  <script src="assets/dashboard.js?v=1.3" defer></script>
 </head>
 <body>
   <svg aria-hidden="true" class="svg-library" xmlns="http://www.w3.org/2000/svg">
@@ -32,7 +32,7 @@
     <aside class="sidebar" aria-label="Menu principal">
       <a class="brand" href="#inicio" data-target="overview" aria-label="DeskOps Toolkit, início">
         <span class="brand-mark"><svg class="icon"><use href="#i-terminal"/></svg></span>
-        <span><strong>deskops<span class="brand-accent">.</span></strong><small>TOOLKIT / V1.2</small></span>
+        <span><strong>deskops<span class="brand-accent">.</span></strong><small>TOOLKIT / V1.3</small></span>
       </a>
       <div class="side-caption">ESPAÇO DE TRABALHO</div>
       <nav class="side-nav" aria-label="Ferramentas">
@@ -53,7 +53,7 @@
     <div class="workspace">
       <header class="topbar">
         <div class="crumb"><span>Workspace</span><span class="slash">/</span><strong id="page-crumb">Visão geral</strong></div>
-        <span class="build-tag"><span class="tag-dot"></span> NOVO · versão 1.2</span>
+        <span class="build-tag"><span class="tag-dot"></span> NOVO · versão 1.3</span>
       </header>
       <nav class="mobile-nav" aria-label="Navegação móvel">
         <button type="button" class="mobile-link is-active" data-target="overview">Início</button>
@@ -187,6 +187,27 @@
               <p class="dash-hint">O dashboard contabiliza status conhecidos como abertos ou resolvidos. Status não reconhecidos ficam nas distribuições, mas fora desses dois totais.</p>
               <p><a class="site-credit" href="https://github.com/ubercegojb/deskops-toolkit" target="_blank" rel="noopener noreferrer">Documentação no GitHub ↗</a></p>
             </div>
+          </div>
+
+          <div id="dash-filters" class="dash-card dash-filter-card" hidden>
+            <div class="dash-filter-head">
+              <div><span class="kicker">REFINAR RESULTADOS</span><h2>Filtros dos chamados</h2><p>Explore os indicadores por situação, categoria ou data de abertura. Os filtros não modificam o arquivo original.</p></div>
+              <span class="live-pill">V1.3</span>
+            </div>
+            <form id="dash-filter-form">
+              <div class="dash-filter-fields">
+                <label for="dash-filter-status">Status<select id="dash-filter-status"><option value="">Todos os status</option></select></label>
+                <label for="dash-filter-category">Categoria<select id="dash-filter-category"><option value="">Todas as categorias</option></select></label>
+                <label for="dash-filter-from">Abertura a partir de<input id="dash-filter-from" type="date"></label>
+                <label for="dash-filter-to">Abertura até<input id="dash-filter-to" type="date"></label>
+              </div>
+              <div class="dash-filter-actions">
+                <button type="submit" class="primary-btn">Aplicar filtros <svg class="icon"><use href="#i-arrow"/></svg></button>
+                <button type="button" class="outline-button" id="dash-filter-reset">Remover filtros</button>
+                <span class="tiny-muted" id="dash-filter-count" aria-live="polite"></span>
+              </div>
+            </form>
+            <p class="dash-hint">Datas usam a coluna de abertura e incluem o dia final. Chamados sem data válida ficam fora quando há filtro por período.</p>
           </div>
           <div id="dash-results" hidden>
             <div class="dash-result-top">
