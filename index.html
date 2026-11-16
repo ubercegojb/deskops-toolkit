@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="DeskOps Toolkit: utilitários gratuitos de Service Desk, redes e segurança, executados no seu navegador.">
+  <meta name="theme-color" content="#081322">
+  <title>DeskOps Toolkit — Ferramentas para quem resolve</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/core.js" defer></script>
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <svg aria-hidden="true" class="svg-library" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><rect x="9" y="2" width="6" height="6" rx="1.5"/><rect x="2" y="16" width="6" height="6" rx="1.5"/><rect x="16" y="16" width="6" height="6" rx="1.5"/><path d="M12 8v4M5 16v-4h14v4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 8 3v6c0 5-3.4 8.7-8 11-4.6-2.3-8-6-8-11V5l8-3Z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 2.2 7.8L22 12l-7.8 2.2L12 22l-2.2-7.8L2 12l7.8-2.2L12 2Z"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="18" rx="2"/><path d="m7 9 3 3-3 3M13 15h4"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 11v5M12 8h.01"/></symbol>
+  </svg>
+
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Menu principal">
+      <a class="brand" href="#inicio" data-target="overview" aria-label="DeskOps Toolkit, início">
+        <span class="brand-mark"><svg class="icon"><use href="#i-terminal"/></svg></span>
+        <span><strong>deskops<span class="brand-accent">.</span></strong><small>TOOLKIT / V1.0</small></span>
+      </a>
+      <div class="side-caption">ESPAÇO DE TRABALHO</div>
+      <nav class="side-nav" aria-label="Ferramentas">
+        <button type="button" class="nav-link is-active" data-target="overview" aria-current="page"><svg class="icon"><use href="#i-grid"/></svg><span>Visão geral</span></button>
+        <div class="nav-divider"></div>
+        <div class="side-caption mini">FERRAMENTAS</div>
+        <button type="button" class="nav-link" data-target="sla"><svg class="icon"><use href="#i-clock"/></svg><span>Calculadora de SLA</span></button>
+        <button type="button" class="nav-link" data-target="subnet"><svg class="icon"><use href="#i-network"/></svg><span>Calculadora de rede</span></button>
+        <button type="button" class="nav-link" data-target="password"><svg class="icon"><use href="#i-shield"/></svg><span>Gerador de senhas</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="mini-status"><span class="pulse"></span><span>Funcionando no seu navegador</span></div>
+        <div class="side-note">Projeto de portfólio pessoal.<br>Sem integração com sistemas internos.</div>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="crumb"><span>Workspace</span><span class="slash">/</span><strong id="page-crumb">Visão geral</strong></div>
+        <span class="build-tag"><span class="tag-dot"></span> MVP · versão 1.0</span>
+      </header>
+      <nav class="mobile-nav" aria-label="Navegação móvel">
+        <button type="button" class="mobile-link is-active" data-target="overview">Início</button>
+        <button type="button" class="mobile-link" data-target="sla">SLA</button>
+        <button type="button" class="mobile-link" data-target="subnet">Rede</button>
+        <button type="button" class="mobile-link" data-target="password">Senhas</button>
+      </nav>
+
+      <main class="main-content" id="main">
+        <section id="view-overview" class="view is-visible" aria-label="Visão geral">
+          <div class="hero">
+            <div class="hero-content">
+              <span class="eyebrow"><span class="tiny-square"></span> SERVICE DESK · INFRA · SECURITY</span>
+              <h1>Seu próximo problema<br><em>já tem uma ferramenta.</em></h1>
+              <p>Uma bancada digital com utilitários rápidos para o dia a dia de quem vive tecnologia. Simples, prático e feito para evoluir.</p>
+              <button type="button" class="primary-btn" data-target="sla">Explorar ferramentas <svg class="icon"><use href="#i-arrow"/></svg></button>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="art-ring ring-one"></div><div class="art-ring ring-two"></div>
+              <div class="art-terminal"><div class="terminal-top"><i></i><i></i><i></i><span>deskops / terminal</span></div><div class="terminal-lines"><span><b>$</b> tools --status</span><span class="muted-code">&gt; carregando utilitários...</span><span class="code-ok">✓ 3 ferramentas disponíveis</span><span class="muted-code">&gt; pronto para começar<span class="cursor">_</span></span></div></div>
+              <div class="art-chip chip-a">SLA <span>↗</span></div><div class="art-chip chip-b">IP / CIDR <span>✓</span></div>
+            </div>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><div class="stat-icon violet"><svg class="icon"><use href="#i-grid"/></svg></div><div><strong>03</strong><span>Ferramentas disponíveis</span></div></div>
+            <div class="stat"><div class="stat-icon cyan"><svg class="icon"><use href="#i-shield"/></svg></div><div><strong>100%</strong><span>Processamento local</span></div></div>
+            <div class="stat"><div class="stat-icon green"><svg class="icon"><use href="#i-check"/></svg></div><div><strong>R$ 0</strong><span>Sem custos ou cadastro</span></div></div>
+          </div>
+
+          <div class="section-heading"><div><span class="kicker">SELEÇÃO DE UTILITÁRIOS</span><h2>Ferramentas disponíveis</h2><p>Escolha o que precisa e comece a usar.</p></div><span class="count-label">03 TOOLKITS</span></div>
+          <div class="tool-grid">
+            <button type="button" class="tool-card" data-target="sla"><span class="tool-icon purple"><svg class="icon"><use href="#i-clock"/></svg></span><span class="tool-category">OPERAÇÕES / SLA</span><strong>Calculadora de SLA</strong><span class="tool-desc">Calcule o prazo de atendimento considerando dias úteis e horário comercial.</span><span class="tool-cta">Abrir ferramenta <svg class="icon"><use href="#i-arrow"/></svg></span></button>
+            <button type="button" class="tool-card" data-target="subnet"><span class="tool-icon blue"><svg class="icon"><use href="#i-network"/></svg></span><span class="tool-category">INFRAESTRUTURA / REDES</span><strong>Calculadora IPv4</strong><span class="tool-desc">Descubra máscara, rede, broadcast e intervalo de hosts em segundos.</span><span class="tool-cta">Abrir ferramenta <svg class="icon"><use href="#i-arrow"/></svg></span></button>
+            <button type="button" class="tool-card" data-target="password"><span class="tool-icon teal"><svg class="icon"><use href="#i-shield"/></svg></span><span class="tool-category">SEGURANÇA / UTILITÁRIOS</span><strong>Gerador de senhas</strong><span class="tool-desc">Crie senhas aleatórias com opções de tamanho e tipos de caracteres.</span><span class="tool-cta">Abrir ferramenta <svg class="icon"><use href="#i-arrow"/></svg></span></button>
+          </div>
+
+          <div class="bottom-grid">
+            <div class="note-card"><span class="note-icon"><svg class="icon"><use href="#i-spark"/></svg></span><div><strong>Construído para aprender fazendo</strong><p>Este é o primeiro passo de um portfólio de TI. Em versões futuras entram novas ferramentas, documentação e estudos de caso.</p></div></div>
+            <div class="note-card dark-note"><span class="note-icon"><svg class="icon"><use href="#i-info"/></svg></span><div><strong>Privacidade em primeiro lugar</strong><p>Nenhum dado é enviado a servidores pelo aplicativo. Evite inserir informações confidenciais em sites públicos.</p></div></div>
+          </div>
+        </section>
+
+        <section id="view-sla" class="view" aria-label="Calculadora de SLA" hidden>
+          <div class="tool-page-head"><div class="page-icon purple"><svg class="icon"><use href="#i-clock"/></svg></div><span class="kicker">OPERAÇÕES DE TI</span><h1>Calculadora de SLA</h1><p>Descubra a data e o horário limite de um atendimento, considerando expediente comercial.</p></div>
+          <div class="workspace-grid">
+            <div class="workspace-card"><div class="card-head"><h2>Configure o prazo</h2><span class="tiny-label">DADOS DO ATENDIMENTO</span></div>
+              <form id="sla-form" novalidate>
+                <label for="sla-start">Data e hora de abertura</label><input id="sla-start" name="start" type="datetime-local" required>
+                <label for="sla-hours">Prazo acordado (em horas úteis)</label><input id="sla-hours" name="hours" type="number" value="8" min="0.5" max="1000" step="0.5" required>
+                <div class="inline-tip"><svg class="icon"><use href="#i-info"/></svg><span>Regra: segunda a sexta, das 09h às 18h. Feriados não são descontados.</span></div>
+                <button type="submit" class="primary-btn stretch">Calcular prazo <svg class="icon"><use href="#i-arrow"/></svg></button>
+              </form>
+            </div>
+            <div class="output-card"><div class="card-head"><h2>Resultado</h2><span class="live-pill">HORÁRIO LOCAL</span></div><div class="result-caption">PRAZO FINAL ESTIMADO</div><strong class="big-result" id="sla-result">—</strong><p class="result-subtitle" id="sla-status">Preencha os campos e clique em calcular.</p><div class="result-divider"></div><div class="output-note">O cálculo é demonstrativo e não substitui as regras contratuais de SLA, calendário de feriados ou configurações do seu ITSM.</div></div>
+          </div>
+        </section>
+
+        <section id="view-subnet" class="view" aria-label="Calculadora IPv4" hidden>
+          <div class="tool-page-head"><div class="page-icon blue"><svg class="icon"><use href="#i-network"/></svg></div><span class="kicker">INFRAESTRUTURA DE REDES</span><h1>Calculadora IPv4 / CIDR</h1><p>Entenda como um endereço IP e sua máscara definem uma rede.</p></div>
+          <div class="workspace-grid">
+            <div class="workspace-card"><div class="card-head"><h2>Dados da rede</h2><span class="tiny-label">ENDEREÇAMENTO</span></div>
+              <form id="subnet-form" novalidate><label for="subnet-ip">Endereço IPv4</label><input id="subnet-ip" name="ip" type="text" value="192.168.10.42" placeholder="Ex.: 192.168.10.42" autocomplete="off" spellcheck="false" required><label for="subnet-prefix">Prefixo CIDR</label><div class="input-with-prefix"><span>/</span><input id="subnet-prefix" name="prefix" type="number" value="24" min="0" max="32" step="1" required></div><div class="inline-tip"><svg class="icon"><use href="#i-info"/></svg><span>Exemplo: 192.168.10.42/24 pertence à rede 192.168.10.0.</span></div><button type="submit" class="primary-btn stretch">Calcular rede <svg class="icon"><use href="#i-arrow"/></svg></button></form>
+            </div>
+            <div class="output-card"><div class="card-head"><h2>Informações da rede</h2><span class="live-pill">IPV4</span></div><p class="result-subtitle" id="subnet-status">Preencha os campos e clique em calcular.</p><dl class="network-results" id="subnet-results" aria-live="polite"><div><dt>Rede</dt><dd id="out-network">—</dd></div><div><dt>Máscara</dt><dd id="out-mask">—</dd></div><div><dt>Broadcast</dt><dd id="out-broadcast">—</dd></div><div><dt>Intervalo utilizável</dt><dd id="out-range">—</dd></div><div><dt>Endereços utilizáveis</dt><dd id="out-hosts">—</dd></div></dl><div class="result-divider"></div><div class="output-note">Em redes /31 consideramos os dois endereços utilizáveis em enlaces ponto a ponto (RFC 3021); /32 representa um único host.</div></div>
+          </div>
+        </section>
+
+        <section id="view-password" class="view" aria-label="Gerador de senhas" hidden>
+          <div class="tool-page-head"><div class="page-icon teal"><svg class="icon"><use href="#i-shield"/></svg></div><span class="kicker">SEGURANÇA DA INFORMAÇÃO</span><h1>Gerador de senhas</h1><p>Gere senhas aleatórias usando o gerador criptográfico nativo do navegador.</p></div>
+          <div class="workspace-grid">
+            <div class="workspace-card"><div class="card-head"><h2>Personalize sua senha</h2><span class="tiny-label">CRITÉRIOS</span></div>
+              <form id="password-form" novalidate><div class="slider-label"><label for="pw-length">Quantidade de caracteres</label><output for="pw-length" id="pw-length-value">20</output></div><input id="pw-length" name="length" type="range" min="8" max="40" value="20" step="1">
+                <fieldset class="checks"><legend>Tipos de caracteres</legend><label><input type="checkbox" id="pw-lower" checked> Letras minúsculas (a-z)</label><label><input type="checkbox" id="pw-upper" checked> Letras maiúsculas (A-Z)</label><label><input type="checkbox" id="pw-numbers" checked> Números (0-9)</label><label><input type="checkbox" id="pw-symbols" checked> Símbolos (!@#$...)</label></fieldset>
+                <button type="submit" class="primary-btn stretch">Gerar nova senha <svg class="icon"><use href="#i-spark"/></svg></button></form>
+            </div>
+            <div class="output-card"><div class="card-head"><h2>Sua senha</h2><span class="live-pill">GERAÇÃO LOCAL</span></div><div class="result-caption">SENHA GERADA</div><div class="password-field"><input id="pw-output" type="text" aria-label="Senha gerada" readonly placeholder="Clique em gerar"><button type="button" id="pw-copy" aria-label="Copiar senha" title="Copiar senha"><svg class="icon"><use href="#i-copy"/></svg></button></div><p class="result-subtitle" id="pw-message" role="status">Escolha as opções e gere uma senha.</p><div class="result-divider"></div><div class="output-note">Nenhuma senha é transmitida ou armazenada pelo aplicativo. Para contas reais, prefira um gerenciador de senhas e ative MFA sempre que disponível.</div></div>
+          </div>
+        </section>
+      </main>
+      <footer class="footer"><span>© 2026 DeskOps Toolkit · Projeto pessoal de portfólio</span><span>Construído com HTML, CSS e JavaScript</span></footer>
+    </div>
+  </div>
+</body>
+</html>
