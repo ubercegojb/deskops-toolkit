@@ -83,6 +83,37 @@
     return dt;
   }
 
+  // Filtros independentes: mantemos os dados originais na memória e analisamos uma cópia filtrada.
+  function filterRows(rows, columns, filters = {}) {
+    const statusCol = Number(columns.status);
+    const categoryCol = columns.category == null || columns.category === "" ? -1 : Number(columns.category);
+    const dateCol = columns.opened == null || columns.opened === "" ? -1 : Number(columns.opened);
+    const { status = "", category = "", from = "", to = "" } = filters;
+    if (columns.status === "" || !Number.isInteger(statusCol) || statusCol < 0)
+      throw Error("Selecione a coluna de status antes de filtrar.");
+    if (category && categoryCol < 0) throw Error("Selecione uma coluna de categoria antes de filtrar.");
+    if ((from || to) && dateCol < 0) throw Error("Selecione a coluna de data de abertura para usar o período.");
+    const dateStart = from ? parseDate(from) : null, dateEnd = to ? parseDate(to) : null;
+    if ((from && !dateStart) || (to && !dateEnd)) throw Error("Informe datas de período válidas.");
+    if (dateStart && dateEnd && dateStart > dateEnd) throw Error("A data inicial não pode ser posterior à data final.");
+    // Data final inclui o dia completo, inclusive horas.
+    if (dateEnd) dateEnd.setDate(dateEnd.getDate() + 1);
+    return rows.filter(row => {
+      if (status && row[statusCol] !== status) return false;
+      if (category && row[categoryCol] !== category) return false;
+      if (dateStart || dateEnd) {
+        const opened = parseDate(row[dateCol]);
+        if (!opened || (dateStart && opened < dateStart) || (dateEnd && opened >= dateEnd)) return false;
+      }
+      return true;
+    });
+  }
+  function distinctValues(rows, column) {
+    if (column == null || column === "" || !Number.isInteger(Number(column)) || Number(column) < 0) return [];
+    const i = Number(column);
+    return Array.from(new Set(rows.map(row => row[i] || "Não informado"))).sort((a,b) => a.localeCompare(b, "pt-BR"));
+  }
+
   function summarize(rows, columns) {
     const statusCol = Number(columns.status);
     if (columns.status === "" || !Number.isInteger(statusCol) || statusCol < 0) throw Error("Selecione a coluna de status.");
@@ -121,7 +152,7 @@
       byStatus: sort(statuses), byCategory: sort(categories)
     };
   }
-  const api = { parseCsv, suggestColumns, parseDate, summarize, normalize };
+  const api = { parseCsv, suggestColumns, parseDate, summarize, filterRows, distinctValues, normalize };
   root.DeskOpsAnalytics = api;
   if (typeof module !== "undefined" && module.exports) module.exports = api;
 })(typeof window !== "undefined" ? window : globalThis);
