@@ -39,7 +39,7 @@
     target.textContent = message;
     target.classList.toggle("error", error);
   }
-  function clearReport() { $("dash-results").hidden = true; $("dash-filters").hidden = true; }
+  function clearReport() { $("dash-results").hidden = true; $("dash-filters").hidden = true; $("dash-total-caption").textContent = "Registros do arquivo"; }
   function load(text, label) {
     clearReport();
     try {
@@ -76,9 +76,8 @@
   function barChart(target, items, total, limit=8) {
     target.replaceChildren();
     const group = items.slice(0, limit);
-    if (items.length > limit) group.push({ name: "Outras categorias", count: items.slice(limit).reduce((sum, x) => sum + x.count, 0) });
+    if (items.length > limit) group.push({ name: target.id === "dash-status-bars" ? "Outros status" : "Outras categorias", count: items.slice(limit).reduce((sum, x) => sum + x.count, 0) });
     if (!group.length) { target.textContent = "Nenhum dado disponível."; return; }
-    const max = Math.max(...group.map(item => item.count), 1);
     for (const item of group) {
       const wrapper = document.createElement("div");
       wrapper.className = "dash-bar-item";
@@ -94,7 +93,8 @@
       track.className = "dash-bar-track";
       const fill = document.createElement("div");
       fill.className = "dash-bar-fill";
-      fill.style.width = Math.max(2, item.count / max * 100) + "%";
+      fill.style.width = Math.max(1.5, total ? item.count / total * 100 : 0) + "%";
+      track.setAttribute("aria-hidden", "true");
       track.append(fill);
       wrapper.append(heading, track);
       target.append(wrapper);
@@ -146,6 +146,7 @@
         ? "Coluna utilizada: " + categoryColumn
         : "Nenhuma coluna de categoria selecionada";
       $("dash-total").textContent = report.total.toLocaleString("pt-BR");
+      $("dash-total-caption").textContent = useFilters && Object.values(filters).some(Boolean) ? "Registros filtrados" : "Registros do arquivo";
       $("dash-open").textContent = report.opened.toLocaleString("pt-BR");
       $("dash-resolved").textContent = report.resolved.toLocaleString("pt-BR");
       $("dash-average").textContent = report.averageResolutionHours == null ? "—" : report.averageResolutionHours.toLocaleString("pt-BR",{minimumFractionDigits:1,maximumFractionDigits:1}) + " h";
@@ -158,6 +159,7 @@
       feedback(prefix + "Coluna de categoria: " + (categoryColumn || "não selecionada") + ". " + (report.other ? report.other + " status não classificados. " : "") + "Nenhum dado enviado para servidores.");
       return true;
     } catch (e) {
+      $("dash-results").hidden = true; // Evita apresentar indicadores antigos após erro de mapeamento.
       feedback(e.message, true);
       return false;
     }
