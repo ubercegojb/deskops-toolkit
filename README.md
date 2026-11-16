@@ -2,7 +2,7 @@
 
 **Ferramentas para quem resolve.** Projeto pessoal de portfólio para Service Desk, Infraestrutura de TI e Segurança da Informação.
 
-**Versão:** 1.3 (filtros de status, categoria e período no dashboard) · **Tecnologias:** HTML, CSS e JavaScript puro. Sem backend, cadastro, banco de dados ou dependências externas.
+**Versão:** 1.4 (revisão final de usabilidade, indicadores e testes) · **Tecnologias:** HTML, CSS e JavaScript puro. Sem backend, cadastro, banco de dados ou dependências externas.
 
 ## Ferramentas
 
@@ -12,6 +12,8 @@
 4. **Dashboard de chamados** — importa CSV localmente, reconhece ou permite selecionar colunas de status, categoria e datas, e apresenta KPIs e gráficos. Também oferece uma amostra fictícia.
 
 **Site público:** https://ubercegojb.github.io/deskops-toolkit/
+
+**[Estudo de caso do projeto](docs/ESTUDO_DE_CASO.md)** — objetivo, funcionalidades, arquitetura, testes, limites e evidências para apresentar em entrevistas.
 
 ### Como usar o Dashboard de chamados
 
@@ -118,6 +120,7 @@ Os testes verificam cálculos de SLA, redes e senhas; importação de CSV com as
 - **1.1:** refinamentos visuais, versão visível, navegação com quarto cartão, responsividade e link para código.
 - **1.2:** dashboard de chamados com CSV local, mapeamento de colunas, indicadores, dados fictícios e testes.
 - **1.3:** filtros combinados por status, categoria e data de abertura; tratamento de filtros sem correspondências; layout responsivo melhorado e testes automatizados.
+- **1.4:** barras de gráficos proporcionais ao total, rótulos claros de registros filtrados, prevenção de resultados antigos após erros, testes ampliados e estudo de caso.
 
 ## Segurança e limites
 
