@@ -88,6 +88,13 @@
     if (columns.status === "" || !Number.isInteger(statusCol) || statusCol < 0) throw Error("Selecione a coluna de status.");
     const optional = key => columns[key] === "" || columns[key] == null ? -1 : Number(columns[key]);
     const categoryCol = optional("category"), openCol = optional("opened"), endCol = optional("resolved");
+    if (categoryCol === statusCol) {
+      throw Error("Categoria está apontando para a mesma coluna que Status. Selecione a coluna correta de categorias.");
+    }
+    const selected = [statusCol, categoryCol, openCol, endCol].filter(i => i >= 0);
+    if (selected.some(i => !Number.isInteger(i) || i >= (rows[0]?.length ?? 0))) {
+      throw Error("Uma das colunas selecionadas não existe no arquivo. Confira o mapeamento.");
+    }
     const statuses = new Map(), categories = new Map();
     let opened = 0, resolved = 0, other = 0, timeTotal = 0, timeCount = 0;
     for (const row of rows) {
