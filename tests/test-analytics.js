@@ -1,0 +1,27 @@
+/* Executar: node tests/test-analytics.js */
+const assert = require("node:assert/strict");
+const {parseCsv, suggestColumns, parseDate, summarize} = require("../assets/analytics.js");
+const csv = "Status;Categoria;Abertura;Resolução\nNovo;Rede;10/11/2026 09:00;\nSolucionado;Rede;10/11/2026 10:00;10/11/2026 12:00\nFechado;Impressoras;10/11/2026 08:00;10/11/2026 12:00\nPendente;Impressoras;10/11/2026 15:00;\n";
+const data = parseCsv(csv);
+assert.equal(data.delimiter, ";");
+assert.equal(data.rows.length, 4);
+const mapping = suggestColumns(data.headers);
+assert.deepEqual(mapping, {status:"0",category:"1",opened:"2",resolved:"3"});
+const result = summarize(data.rows, mapping);
+assert.equal(result.total, 4);
+assert.equal(result.opened, 2);
+assert.equal(result.resolved, 2);
+assert.equal(result.other, 0);
+assert.equal(result.averageResolutionHours, 3);
+assert.equal(result.timedResolutions, 2);
+assert.equal(result.byStatus.reduce((sum,x)=>sum+x.count,0),4);
+const quotes = parseCsv('Status,Categoria\n"Em andamento","Impressoras, rede"\n"Solucionado","Chamado ""especial"""\n');
+assert.equal(quotes.rows[0][1], "Impressoras, rede");
+assert.equal(quotes.rows[1][1], 'Chamado "especial"');
+assert.equal(parseCsv("\uFEFFStatus;Categoria\r\nNovo;Rede\r\n").rows.length,1);
+assert.equal(parseDate("01/02/2026 12:30").getMonth(),1);
+assert.equal(parseDate("2026-02-01 12:30").getDate(),1);
+assert.equal(parseDate("31/02/2026"),null);
+assert.throws(()=>parseCsv('Status;Categoria\n"Novo;Rede'));
+assert.throws(()=>summarize(data.rows,{status:""}));
+console.log("Indicadores CSV: testes passaram.");
