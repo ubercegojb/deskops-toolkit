@@ -15,6 +15,15 @@ assert.equal(result.other, 0);
 assert.equal(result.averageResolutionHours, 3);
 assert.equal(result.timedResolutions, 2);
 assert.equal(result.byStatus.reduce((sum,x)=>sum+x.count,0),4);
+assert.deepEqual(result.byCategory, [
+  {name:"Impressoras", count:2},
+  {name:"Rede", count:2}
+]);
+assert.notDeepEqual(result.byStatus, result.byCategory);
+assert.throws(
+  () => summarize(data.rows, { status:"0", category:"0", opened:"2", resolved:"3" }),
+  /mesma coluna/
+);
 const quotes = parseCsv('Status,Categoria\n"Em andamento","Impressoras, rede"\n"Solucionado","Chamado ""especial"""\n');
 assert.equal(quotes.rows[0][1], "Impressoras, rede");
 assert.equal(quotes.rows[1][1], 'Chamado "especial"');
