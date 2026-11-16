@@ -105,6 +105,10 @@
     try {
       const mapping = Object.fromEntries(fields.map(([key]) => [key, $("dash-map-" + key).value]));
       const report = analytics.summarize(parsed.rows, mapping);
+      const categoryColumn = mapping.category !== "" ? parsed.headers[Number(mapping.category)] : null;
+      $("dash-category-column").textContent = categoryColumn
+        ? "Coluna utilizada: " + categoryColumn
+        : "Nenhuma coluna de categoria selecionada";
       $("dash-total").textContent = report.total.toLocaleString("pt-BR");
       $("dash-open").textContent = report.opened.toLocaleString("pt-BR");
       $("dash-resolved").textContent = report.resolved.toLocaleString("pt-BR");
@@ -113,7 +117,7 @@
       barChart($("dash-status-bars"), report.byStatus, report.total);
       barChart($("dash-category-bars"), report.byCategory, report.total);
       $("dash-results").hidden = false;
-      feedback("Painel gerado: " + report.total + " chamados. " + (report.other ? report.other + " status não classificados como abertos ou resolvidos. " : "") + "Nenhum dado enviado para servidores.");
+      feedback("Painel gerado: " + report.total + " chamados. Coluna de categoria: " + (categoryColumn || "não selecionada") + ". " + (report.other ? report.other + " status não classificados como abertos ou resolvidos. " : "") + "Nenhum dado enviado para servidores.");
     } catch (e) { clearReport(); feedback(e.message, true); }
   }
   $("dash-example").addEventListener("click", () => load(demo, "Dados fictícios de demonstração"));
