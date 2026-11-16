@@ -2,13 +2,29 @@
 
 **Ferramentas para quem resolve.** Projeto pessoal de portfólio para Service Desk, Infraestrutura de TI e Segurança da Informação.
 
-**Versão:** 1.0 (MVP) · **Tecnologias:** HTML, CSS e JavaScript puro. Sem backend, cadastro, banco de dados ou dependências externas.
+**Versão:** 1.2 (acabamento visual + dashboard CSV) · **Tecnologias:** HTML, CSS e JavaScript puro. Sem backend, cadastro, banco de dados ou dependências externas.
 
 ## Ferramentas
 
 1. **Calculadora de SLA** — soma horas úteis a uma data de abertura, usando **segunda a sexta, 09h–18h**. Não considera feriados, pausas contratuais ou regras específicas de SLA.
 2. **Calculadora IPv4/CIDR** — mostra rede, máscara, broadcast, faixa e quantidade de hosts utilizáveis. Considera /31 ponto a ponto (RFC 3021) e /32 host único.
 3. **Gerador de senhas** — utiliza `crypto.getRandomValues` com seleção sem viés por amostragem de rejeição, ao menos um caractere de cada tipo habilitado e embaralhamento. Não armazena as senhas.
+4. **Dashboard de chamados** — importa CSV localmente, reconhece ou permite selecionar colunas de status, categoria e datas, e apresenta KPIs e gráficos. Também oferece uma amostra fictícia.
+
+**Site público:** https://ubercegojb.github.io/deskops-toolkit/
+
+### Como usar o Dashboard de chamados
+
+1. Abra a aba **Dashboard**. Clique em **Experimentar com dados fictícios** para entender a apresentação.
+2. Para outro arquivo, escolha um CSV UTF-8 ou Windows-1252 de até **2 MB / 10 mil chamados**.
+3. Ajuste o mapeamento de **Status** (obrigatório), **Categoria** e datas (opcionais).
+4. Clique em **Gerar indicadores**. O arquivo é analisado somente na memória do navegador e não é enviado ao servidor.
+5. O tempo médio é o intervalo em **horas corridas** entre abertura e resolução, para chamados resolvidos com ambas as datas válidas. Não significa SLA.
+6. Status desconhecidos aparecem na distribuição, mas não entram nos totais de abertos/resolvidos.
+
+Aceita delimitadores `;`, `,` e tabulações, além de campos entre aspas. **Não envie para este repositório nenhuma exportação real de chamados**. Trabalhe com amostras fictícias ou anonimizadas, respeitando as regras de sua organização.
+
+Um arquivo de exemplo está em [samples/chamados-demo.csv](samples/chamados-demo.csv). A detecção de colunas depende dos nomes; se não reconhecer, selecione manualmente.
 
 ## Rodar no computador (jeito mais fácil)
 
@@ -35,11 +51,19 @@ deskops-toolkit/
 ├── index.html          # Páginas, textos e formulários
 ├── assets/
 │   ├── styles.css      # Visual responsivo, cores e layout
-│   ├── core.js         # Cálculos e funções de negócio
-│   ├── app.js          # Cliques, formulários e resultados
+│   ├── dashboard.css   # Layout dos KPIs e gráficos
+│   ├── core.js         # Cálculos de SLA, rede e senhas
+│   ├── analytics.js    # Parser CSV e agregação de indicadores
+│   ├── app.js          # Menu e formulários das ferramentas iniciais
+│   ├── dashboard.js    # Importação CSV, mapeamento e painéis
 │   └── favicon.svg     # Ícone do navegador
+├── samples/
+│   └── chamados-demo.csv # Dados 100% fictícios
 ├── tests/
-│   └── test-core.js    # Testes automatizados opcionais
+│   ├── test-core.js     # Testes de SLA, CIDR e senhas
+│   └── test-analytics.js # Testes do motor de indicadores
+├── .github/workflows/
+│   └── testes.yml       # Testes no GitHub Actions
 ├── .nojekyll           # Publicação simples via GitHub Pages
 └── README.md           # Documentação do projeto
 ```
@@ -65,25 +89,34 @@ Se tiver o Node.js instalado, rode na pasta do projeto:
 
 ```bash
 node tests/test-core.js
+node tests/test-analytics.js
 ```
 
-Testes incluem cálculo que atravessa fins de semana, rede /24, /31, /32 e validação das senhas.
+Os testes verificam cálculos de SLA, redes e senhas; importação de CSV com aspas, datas, mapeamento de colunas e indicadores. O fluxo do GitHub Actions também os executa a cada push/PR.
 
 ## Como estudar cada arquivo
 
 1. Comece pelo `index.html`: encontre um título e altere o texto.
 2. Passe para `assets/styles.css`: mude uma cor (por exemplo `--mint`) e recarregue.
 3. Leia `assets/app.js`: descubra o que acontece quando clica em **Calcular**.
-4. Por último, estude `assets/core.js`: a lógica por trás dos resultados.
-5. Teste cada modificação antes de publicá-la novamente.
+4. Por último, estude `assets/core.js` e `assets/analytics.js`: a lógica por trás dos resultados.
+5. Leia `assets/dashboard.js` para ver como os CSVs se transformam em gráficos.
+6. Teste cada modificação antes de publicá-la novamente.
 
 ## Melhorias futuras
 
 - Exportação de resultados em PDF (somente se for útil).
 - Ferramenta de diagnóstico DNS/IP e documentação de rede (com backend local próprio).
-- Importação **local** de CSV de chamados, com dados fictícios.
+- Melhoria da leitura de CSV e filtros por período e categoria.
 - Página pública de estudos de caso, antes/depois e aprendizados.
 - Testes automatizados de interface e melhorias de acessibilidade.
+
+## Histórico de versões
+
+- **1.0:** SLA, IPv4/CIDR, geração de senhas.
+- **1.1:** refinamentos visuais, versão visível, navegação com quarto cartão, responsividade e link para código.
+- **1.2:** dashboard de chamados com CSV local, mapeamento de colunas, indicadores, dados fictícios e testes.
+- **1.3 (planejada):** melhorias de robustez, filtros, acessibilidade, revisão e publicação estável.
 
 ## Segurança e limites
 
