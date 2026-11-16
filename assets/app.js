@@ -2,7 +2,7 @@
 (()=>{
 "use strict";
 const core=window.DeskOpsCore, $=id=>document.getElementById(id);
-const pages={overview:"Visão geral",sla:"Calculadora de SLA",subnet:"Calculadora IPv4",password:"Gerador de senhas"};
+const pages={overview:"Visão geral",sla:"Calculadora de SLA",subnet:"Calculadora IPv4",password:"Gerador de senhas",dashboard:"Dashboard de chamados"};
 function showView(page){
  const target=Object.prototype.hasOwnProperty.call(pages,page)?page:"overview";
  document.querySelectorAll(".view").forEach(el=>{const on=el.id==="view-"+target;el.hidden=!on;el.classList.toggle("is-visible",on);});
