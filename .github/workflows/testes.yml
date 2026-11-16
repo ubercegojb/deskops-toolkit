@@ -1,0 +1,21 @@
+name: Testes do DeskOps Toolkit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Testar ferramentas
+        run: |
+          node tests/test-core.js
+          node tests/test-analytics.js
