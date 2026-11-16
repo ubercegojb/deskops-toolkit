@@ -2,7 +2,7 @@
 
 **Ferramentas para quem resolve.** Projeto pessoal de portfólio para Service Desk, Infraestrutura de TI e Segurança da Informação.
 
-**Versão:** 1.2 (acabamento visual + dashboard CSV) · **Tecnologias:** HTML, CSS e JavaScript puro. Sem backend, cadastro, banco de dados ou dependências externas.
+**Versão:** 1.3 (filtros de status, categoria e período no dashboard) · **Tecnologias:** HTML, CSS e JavaScript puro. Sem backend, cadastro, banco de dados ou dependências externas.
 
 ## Ferramentas
 
@@ -19,8 +19,9 @@
 2. Para outro arquivo, escolha um CSV UTF-8 ou Windows-1252 de até **2 MB / 10 mil chamados**.
 3. Ajuste o mapeamento de **Status** (obrigatório), **Categoria** e datas (opcionais).
 4. Clique em **Gerar indicadores**. O arquivo é analisado somente na memória do navegador e não é enviado ao servidor.
-5. O tempo médio é o intervalo em **horas corridas** entre abertura e resolução, para chamados resolvidos com ambas as datas válidas. Não significa SLA.
-6. Status desconhecidos aparecem na distribuição, mas não entram nos totais de abertos/resolvidos.
+5. Use os filtros por **status, categoria e data de abertura**. Você pode combiná-los, e o período inclui o último dia completo. Clique em **Remover filtros** para voltar aos dados completos.
+6. O tempo médio é o intervalo em **horas corridas** entre abertura e resolução, para chamados resolvidos com ambas as datas válidas. Não significa SLA.
+7. Status desconhecidos aparecem na distribuição, mas não entram nos totais de abertos/resolvidos.
 
 Aceita delimitadores `;`, `,` e tabulações, além de campos entre aspas. **Não envie para este repositório nenhuma exportação real de chamados**. Trabalhe com amostras fictícias ou anonimizadas, respeitando as regras de sua organização.
 
@@ -92,7 +93,7 @@ node tests/test-core.js
 node tests/test-analytics.js
 ```
 
-Os testes verificam cálculos de SLA, redes e senhas; importação de CSV com aspas, datas, mapeamento de colunas e indicadores. O fluxo do GitHub Actions também os executa a cada push/PR.
+Os testes verificam cálculos de SLA, redes e senhas; importação de CSV com aspas, datas, mapeamento, filtros combinados e indicadores. O fluxo do GitHub Actions também os executa a cada push/PR.
 
 ## Como estudar cada arquivo
 
@@ -107,7 +108,7 @@ Os testes verificam cálculos de SLA, redes e senhas; importação de CSV com as
 
 - Exportação de resultados em PDF (somente se for útil).
 - Ferramenta de diagnóstico DNS/IP e documentação de rede (com backend local próprio).
-- Melhoria da leitura de CSV e filtros por período e categoria.
+- Revisão aprofundada da importação CSV, formatos de datas especiais e mensagens de erro.
 - Página pública de estudos de caso, antes/depois e aprendizados.
 - Testes automatizados de interface e melhorias de acessibilidade.
 
@@ -116,7 +117,7 @@ Os testes verificam cálculos de SLA, redes e senhas; importação de CSV com as
 - **1.0:** SLA, IPv4/CIDR, geração de senhas.
 - **1.1:** refinamentos visuais, versão visível, navegação com quarto cartão, responsividade e link para código.
 - **1.2:** dashboard de chamados com CSV local, mapeamento de colunas, indicadores, dados fictícios e testes.
-- **1.3 (planejada):** melhorias de robustez, filtros, acessibilidade, revisão e publicação estável.
+- **1.3:** filtros combinados por status, categoria e data de abertura; tratamento de filtros sem correspondências; layout responsivo melhorado e testes automatizados.
 
 ## Segurança e limites
 
