@@ -99,8 +99,8 @@
     // Data final inclui o dia completo, inclusive horas.
     if (dateEnd) dateEnd.setDate(dateEnd.getDate() + 1);
     return rows.filter(row => {
-      if (status && row[statusCol] !== status) return false;
-      if (category && row[categoryCol] !== category) return false;
+      if (status && (row[statusCol] || "Não informado") !== status) return false;
+      if (category && (row[categoryCol] || "Não informado") !== category) return false;
       if (dateStart || dateEnd) {
         const opened = parseDate(row[dateCol]);
         if (!opened || (dateStart && opened < dateStart) || (dateEnd && opened >= dateEnd)) return false;
@@ -123,7 +123,7 @@
       throw Error("Categoria está apontando para a mesma coluna que Status. Selecione a coluna correta de categorias.");
     }
     const selected = [statusCol, categoryCol, openCol, endCol].filter(i => i >= 0);
-    if (selected.some(i => !Number.isInteger(i) || i >= (rows[0]?.length ?? 0))) {
+    if (selected.some(i => !Number.isInteger(i) || i < 0 || (rows.length > 0 && i >= rows[0].length))) {
       throw Error("Uma das colunas selecionadas não existe no arquivo. Confira o mapeamento.");
     }
     const statuses = new Map(), categories = new Map();
