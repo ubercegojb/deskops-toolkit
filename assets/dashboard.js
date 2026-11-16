@@ -39,7 +39,7 @@
     target.textContent = message;
     target.classList.toggle("error", error);
   }
-  function clearReport() { $("dash-results").hidden = true; }
+  function clearReport() { $("dash-results").hidden = true; $("dash-filters").hidden = true; }
   function load(text, label) {
     clearReport();
     try {
@@ -100,11 +100,47 @@
       target.append(wrapper);
     }
   }
-  function createReport() {
+  function getMapping() {
+    return Object.fromEntries(fields.map(([key]) => [key, $("dash-map-" + key).value]));
+  }
+  function clearFilters() {
+    $("dash-filter-status").value = "";
+    $("dash-filter-category").value = "";
+    $("dash-filter-from").value = "";
+    $("dash-filter-to").value = "";
+  }
+  function optionsFor(select, values, allLabel) {
+    select.replaceChildren();
+    const any = document.createElement("option");
+    any.value = ""; any.textContent = allLabel; select.append(any);
+    for (const value of values) {
+      const opt = document.createElement("option");
+      opt.value = value; opt.textContent = value;
+      select.append(opt);
+    }
+    select.value = "";
+  }
+  function showFilters(mapping) {
+    optionsFor($("dash-filter-status"), analytics.distinctValues(parsed.rows, mapping.status), "Todos os status");
+    optionsFor($("dash-filter-category"), analytics.distinctValues(parsed.rows, mapping.category), "Todas as categorias");
+    $("dash-filter-category").disabled = mapping.category === "";
+    $("dash-filter-from").disabled = mapping.opened === "";
+    $("dash-filter-to").disabled = mapping.opened === "";
+    clearFilters();
+    $("dash-filters").hidden = false;
+  }
+  function renderReport(useFilters = false) {
     if (!parsed) return;
+    const mapping = getMapping();
     try {
-      const mapping = Object.fromEntries(fields.map(([key]) => [key, $("dash-map-" + key).value]));
-      const report = analytics.summarize(parsed.rows, mapping);
+      const filters = useFilters ? {
+        status: $("dash-filter-status").value,
+        category: $("dash-filter-category").value,
+        from: $("dash-filter-from").value,
+        to: $("dash-filter-to").value
+      } : {};
+      const currentRows = useFilters ? analytics.filterRows(parsed.rows, mapping, filters) : parsed.rows;
+      const report = analytics.summarize(currentRows, mapping);
       const categoryColumn = mapping.category !== "" ? parsed.headers[Number(mapping.category)] : null;
       $("dash-category-column").textContent = categoryColumn
         ? "Coluna utilizada: " + categoryColumn
@@ -117,8 +153,18 @@
       barChart($("dash-status-bars"), report.byStatus, report.total);
       barChart($("dash-category-bars"), report.byCategory, report.total);
       $("dash-results").hidden = false;
-      feedback("Painel gerado: " + report.total + " chamados. Coluna de categoria: " + (categoryColumn || "não selecionada") + ". " + (report.other ? report.other + " status não classificados como abertos ou resolvidos. " : "") + "Nenhum dado enviado para servidores.");
-    } catch (e) { clearReport(); feedback(e.message, true); }
+      $("dash-filter-count").textContent = useFilters ? report.total + " de " + parsed.rows.length + " registros selecionados" : parsed.rows.length + " registros (sem filtros)";
+      const prefix = report.total ? "Painel gerado: " + report.total + " chamados. " : "Nenhum chamado corresponde aos filtros. ";
+      feedback(prefix + "Coluna de categoria: " + (categoryColumn || "não selecionada") + ". " + (report.other ? report.other + " status não classificados. " : "") + "Nenhum dado enviado para servidores.");
+      return true;
+    } catch (e) {
+      feedback(e.message, true);
+      return false;
+    }
+  }
+  function createReport() {
+    if (!parsed) return;
+    if (renderReport(false)) showFilters(getMapping());
   }
   $("dash-example").addEventListener("click", () => load(demo, "Dados fictícios de demonstração"));
   $("dash-file").addEventListener("change", async event => {
@@ -134,10 +180,14 @@
     } catch (e) { feedback("Não foi possível ler o arquivo: " + e.message, true); }
   });
   $("dash-mapping").addEventListener("submit", event => { event.preventDefault(); createReport(); });
+  $("dash-filter-form").addEventListener("submit", event => { event.preventDefault(); renderReport(true); });
+  $("dash-filter-reset").addEventListener("click", () => { clearFilters(); renderReport(false); });
   $("dash-clear").addEventListener("click", () => {
     parsed = null;
     $("dash-file").value = "";
     $("dash-mapping").hidden = true;
+    $("dash-filters").hidden = true;
+    clearFilters();
     $("dash-source").textContent = "Nenhum arquivo carregado";
     clearReport();
     feedback("Dados limpos da interface. Pronto para importar outro CSV.");
