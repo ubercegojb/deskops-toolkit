@@ -1,0 +1,21 @@
+Status;Categoria;Abertura;Resolução
+Novo;Acesso;10/11/2026 09:00;
+Em andamento;Impressoras;10/11/2026 10:00;
+Pendente;Rede;10/11/2026 11:00;
+Solucionado;Equipamentos;09/11/2026 09:00;09/11/2026 11:00
+Fechado;Acesso;09/11/2026 13:00;10/11/2026 10:00
+Solucionado;Impressoras;10/11/2026 10:00;10/11/2026 11:30
+Novo;Software;11/11/2026 08:00;
+Solucionado;Acesso;11/11/2026 10:00;11/11/2026 10:30
+Em andamento;Rede;11/11/2026 14:00;
+Fechado;Equipamentos;12/11/2026 09:00;12/11/2026 17:00
+Solucionado;Acesso;12/11/2026 10:00;12/11/2026 12:00
+Pendente;Impressoras;12/11/2026 11:00;
+Novo;Software;13/11/2026 08:30;
+Solucionado;Rede;13/11/2026 09:00;13/11/2026 12:00
+Fechado;Impressoras;13/11/2026 10:00;13/11/2026 11:00
+Solucionado;Equipamentos;13/11/2026 13:00;13/11/2026 16:00
+Em andamento;Acesso;16/11/2026 09:00;
+Solucionado;Software;16/11/2026 10:00;16/11/2026 12:00
+Solucionado;Impressoras;16/11/2026 11:00;16/11/2026 14:00
+Novo;Rede;16/11/2026 13:00;
