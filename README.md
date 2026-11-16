@@ -1,0 +1,94 @@
+# DeskOps Toolkit 🧰
+
+**Ferramentas para quem resolve.** Projeto pessoal de portfólio para Service Desk, Infraestrutura de TI e Segurança da Informação.
+
+**Versão:** 1.0 (MVP) · **Tecnologias:** HTML, CSS e JavaScript puro. Sem backend, cadastro, banco de dados ou dependências externas.
+
+## Ferramentas
+
+1. **Calculadora de SLA** — soma horas úteis a uma data de abertura, usando **segunda a sexta, 09h–18h**. Não considera feriados, pausas contratuais ou regras específicas de SLA.
+2. **Calculadora IPv4/CIDR** — mostra rede, máscara, broadcast, faixa e quantidade de hosts utilizáveis. Considera /31 ponto a ponto (RFC 3021) e /32 host único.
+3. **Gerador de senhas** — utiliza `crypto.getRandomValues` com seleção sem viés por amostragem de rejeição, ao menos um caractere de cada tipo habilitado e embaralhamento. Não armazena as senhas.
+
+## Rodar no computador (jeito mais fácil)
+
+1. Baixe o projeto e extraia a pasta.
+2. Abra `index.html` no Chrome, Edge ou Firefox.
+3. Escolha uma ferramenta e teste.
+
+Não precisa instalar Python, Node ou extensões para **usar** as ferramentas.
+
+### Opcional: servidor local
+
+Se tiver Python instalado:
+
+```bash
+python -m http.server 8000
+```
+
+Abra `http://localhost:8000`.
+
+## Estrutura
+
+```text
+deskops-toolkit/
+├── index.html          # Páginas, textos e formulários
+├── assets/
+│   ├── styles.css      # Visual responsivo, cores e layout
+│   ├── core.js         # Cálculos e funções de negócio
+│   ├── app.js          # Cliques, formulários e resultados
+│   └── favicon.svg     # Ícone do navegador
+├── tests/
+│   └── test-core.js    # Testes automatizados opcionais
+├── .nojekyll           # Publicação simples via GitHub Pages
+└── README.md           # Documentação do projeto
+```
+
+## Publicar gratuitamente no GitHub Pages
+
+1. Entre em https://github.com e crie um repositório **Public** chamado `deskops-toolkit`.
+2. No repositório, clique em **Add file > Upload files**.
+3. **Arraste o conteúdo da pasta extraída** (o `index.html` deve ficar na raiz do repositório, e não dentro de outra pasta). Inclua `assets/`, `tests/`, `README.md` e `.nojekyll`.
+4. Faça **Commit changes**.
+5. Abra **Settings > Pages**.
+6. Em **Build and deployment**, escolha **Deploy from a branch**.
+7. Configure **Branch: main** e **Folder: /(root)**; clique em **Save**.
+8. O site aparecerá em `https://SEU-USUARIO.github.io/deskops-toolkit/` após a publicação ser concluída. O link exato fica em **Settings > Pages**.
+
+Documentação oficial: https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+
+> **Atenção:** o site e o repositório são públicos. Não publique dados internos, credenciais, nomes, prints com informações pessoais ou informações da rede da instituição.
+
+## Testes (opcional, para aprender programação)
+
+Se tiver o Node.js instalado, rode na pasta do projeto:
+
+```bash
+node tests/test-core.js
+```
+
+Testes incluem cálculo que atravessa fins de semana, rede /24, /31, /32 e validação das senhas.
+
+## Como estudar cada arquivo
+
+1. Comece pelo `index.html`: encontre um título e altere o texto.
+2. Passe para `assets/styles.css`: mude uma cor (por exemplo `--mint`) e recarregue.
+3. Leia `assets/app.js`: descubra o que acontece quando clica em **Calcular**.
+4. Por último, estude `assets/core.js`: a lógica por trás dos resultados.
+5. Teste cada modificação antes de publicá-la novamente.
+
+## Melhorias futuras
+
+- Exportação de resultados em PDF (somente se for útil).
+- Ferramenta de diagnóstico DNS/IP e documentação de rede (com backend local próprio).
+- Importação **local** de CSV de chamados, com dados fictícios.
+- Página pública de estudos de caso, antes/depois e aprendizados.
+- Testes automatizados de interface e melhorias de acessibilidade.
+
+## Segurança e limites
+
+- Este projeto roda somente no navegador: **não executa ping, não verifica dispositivos reais e não acessa APIs do GLPI**.
+- Todos os cálculos e senhas são processados localmente. Não há coleta nem transmissão de dados pelo código deste projeto.
+- O cálculo de SLA **não** substitui as regras oficiais do GLPI ou do contrato.
+- Para senhas reais, use um gerenciador confiável, MFA e políticas de sua organização.
+- Projeto de estudo independente, sem vínculo ou autorização implícita de terceiros.
